@@ -1,0 +1,469 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.1
+-- Dumped by pg_dump version 9.6.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: date; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE date (
+    id integer NOT NULL,
+    user_id integer,
+    date_time timestamp with time zone
+);
+
+
+ALTER TABLE date OWNER TO galvanize;
+
+--
+-- Name: date_id_seq; Type: SEQUENCE; Schema: public; Owner: galvanize
+--
+
+CREATE SEQUENCE date_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE date_id_seq OWNER TO galvanize;
+
+--
+-- Name: date_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: galvanize
+--
+
+ALTER SEQUENCE date_id_seq OWNED BY date.id;
+
+
+--
+-- Name: knex_migrations; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE knex_migrations (
+    id integer NOT NULL,
+    name character varying(255),
+    batch integer,
+    migration_time timestamp with time zone
+);
+
+
+ALTER TABLE knex_migrations OWNER TO galvanize;
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: galvanize
+--
+
+CREATE SEQUENCE knex_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE knex_migrations_id_seq OWNER TO galvanize;
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: galvanize
+--
+
+ALTER SEQUENCE knex_migrations_id_seq OWNED BY knex_migrations.id;
+
+
+--
+-- Name: knex_migrations_lock; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE knex_migrations_lock (
+    is_locked integer
+);
+
+
+ALTER TABLE knex_migrations_lock OWNER TO galvanize;
+
+--
+-- Name: sick; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE sick (
+    id integer NOT NULL,
+    user_id integer,
+    date_id integer,
+    is_sick boolean DEFAULT false
+);
+
+
+ALTER TABLE sick OWNER TO galvanize;
+
+--
+-- Name: sick_id_seq; Type: SEQUENCE; Schema: public; Owner: galvanize
+--
+
+CREATE SEQUENCE sick_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE sick_id_seq OWNER TO galvanize;
+
+--
+-- Name: sick_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: galvanize
+--
+
+ALTER SEQUENCE sick_id_seq OWNED BY sick.id;
+
+
+--
+-- Name: step; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE step (
+    id integer NOT NULL,
+    user_id integer,
+    date_id integer,
+    per_day text NOT NULL
+);
+
+
+ALTER TABLE step OWNER TO galvanize;
+
+--
+-- Name: step_id_seq; Type: SEQUENCE; Schema: public; Owner: galvanize
+--
+
+CREATE SEQUENCE step_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE step_id_seq OWNER TO galvanize;
+
+--
+-- Name: step_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: galvanize
+--
+
+ALTER SEQUENCE step_id_seq OWNED BY step.id;
+
+
+--
+-- Name: user; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE "user" (
+    id integer NOT NULL,
+    username text NOT NULL,
+    age integer,
+    sex text,
+    ethnic text,
+    height integer,
+    weight integer
+);
+
+
+ALTER TABLE "user" OWNER TO galvanize;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: galvanize
+--
+
+CREATE SEQUENCE user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_id_seq OWNER TO galvanize;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: galvanize
+--
+
+ALTER SEQUENCE user_id_seq OWNED BY "user".id;
+
+
+--
+-- Name: user_weather; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE user_weather (
+    id integer NOT NULL,
+    user_id integer,
+    date_id integer,
+    weather_id integer,
+    state text,
+    city text,
+    zip text,
+    temperature integer
+);
+
+
+ALTER TABLE user_weather OWNER TO galvanize;
+
+--
+-- Name: user_weather_id_seq; Type: SEQUENCE; Schema: public; Owner: galvanize
+--
+
+CREATE SEQUENCE user_weather_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_weather_id_seq OWNER TO galvanize;
+
+--
+-- Name: user_weather_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: galvanize
+--
+
+ALTER SEQUENCE user_weather_id_seq OWNED BY user_weather.id;
+
+
+--
+-- Name: weather; Type: TABLE; Schema: public; Owner: galvanize
+--
+
+CREATE TABLE weather (
+    id integer NOT NULL,
+    name text
+);
+
+
+ALTER TABLE weather OWNER TO galvanize;
+
+--
+-- Name: weather_id_seq; Type: SEQUENCE; Schema: public; Owner: galvanize
+--
+
+CREATE SEQUENCE weather_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE weather_id_seq OWNER TO galvanize;
+
+--
+-- Name: weather_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: galvanize
+--
+
+ALTER SEQUENCE weather_id_seq OWNED BY weather.id;
+
+
+--
+-- Name: date id; Type: DEFAULT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY date ALTER COLUMN id SET DEFAULT nextval('date_id_seq'::regclass);
+
+
+--
+-- Name: knex_migrations id; Type: DEFAULT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY knex_migrations ALTER COLUMN id SET DEFAULT nextval('knex_migrations_id_seq'::regclass);
+
+
+--
+-- Name: sick id; Type: DEFAULT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY sick ALTER COLUMN id SET DEFAULT nextval('sick_id_seq'::regclass);
+
+
+--
+-- Name: step id; Type: DEFAULT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY step ALTER COLUMN id SET DEFAULT nextval('step_id_seq'::regclass);
+
+
+--
+-- Name: user id; Type: DEFAULT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY "user" ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regclass);
+
+
+--
+-- Name: user_weather id; Type: DEFAULT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY user_weather ALTER COLUMN id SET DEFAULT nextval('user_weather_id_seq'::regclass);
+
+
+--
+-- Name: weather id; Type: DEFAULT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY weather ALTER COLUMN id SET DEFAULT nextval('weather_id_seq'::regclass);
+
+
+--
+-- Name: date date_pkey; Type: CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY date
+    ADD CONSTRAINT date_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: knex_migrations knex_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY knex_migrations
+    ADD CONSTRAINT knex_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sick sick_pkey; Type: CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY sick
+    ADD CONSTRAINT sick_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: step step_pkey; Type: CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY step
+    ADD CONSTRAINT step_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_weather user_weather_pkey; Type: CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY user_weather
+    ADD CONSTRAINT user_weather_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: weather weather_pkey; Type: CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY weather
+    ADD CONSTRAINT weather_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: date date_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY date
+    ADD CONSTRAINT date_user_id_foreign FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: sick sick_date_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY sick
+    ADD CONSTRAINT sick_date_id_foreign FOREIGN KEY (date_id) REFERENCES date(id) ON DELETE CASCADE;
+
+
+--
+-- Name: sick sick_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY sick
+    ADD CONSTRAINT sick_user_id_foreign FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: step step_date_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY step
+    ADD CONSTRAINT step_date_id_foreign FOREIGN KEY (date_id) REFERENCES date(id) ON DELETE CASCADE;
+
+
+--
+-- Name: step step_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY step
+    ADD CONSTRAINT step_user_id_foreign FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_weather user_weather_date_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY user_weather
+    ADD CONSTRAINT user_weather_date_id_foreign FOREIGN KEY (date_id) REFERENCES date(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_weather user_weather_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY user_weather
+    ADD CONSTRAINT user_weather_user_id_foreign FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_weather user_weather_weather_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: galvanize
+--
+
+ALTER TABLE ONLY user_weather
+    ADD CONSTRAINT user_weather_weather_id_foreign FOREIGN KEY (weather_id) REFERENCES weather(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
